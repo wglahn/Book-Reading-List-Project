@@ -1,0 +1,101 @@
+import React from 'react'
+import * as Yup from "yup";
+import { useFormik } from 'formik';
+import Button from "../components/Button";
+import TextField from '@mui/material/TextField';
+
+const FormSchema = Yup.object({
+    first_name:Yup.string().required("Required"),
+    last_name:Yup.string().required("Required"),
+    email: Yup.string().email("Must be a valid e-mail format").required(),
+    password: Yup.string().required()
+})
+
+// {first_name:"Happy", last_name:"Gilmore", email:"happy@mail.com", password:"12345"}
+export default function RegisterForm({item}) {
+
+    const initialValues={
+        first_name:item?.first_name ?? '',
+        last_name:item?.last_name ?? '',
+        email:item?.email ?? '',
+        password:item?.password ?? '',
+    }
+
+    const handleSubmit =(values,resetForm)=>{
+        console.log(values)
+        if(!item){
+            console.log("Create")
+        }else{
+            console.log("edit")
+        }
+        resetForm(initialValues);
+    }
+
+    const formik = useFormik({
+        initialValues:initialValues,
+        validationSchema:FormSchema,
+        onSubmit:(values, {resetForm})=>{handleSubmit(values, resetForm)},
+        enableReinitialize:true
+
+    })
+
+  return (
+    <form onSubmit={formik.handleSubmit}>
+    <TextField
+        fullWidth
+        id="first_name"
+        name="first_name"
+        type="text"
+        sx={{ mb: 2, mt: 2 }}
+        label="First Name"
+        placeholder="First Name"
+        value={formik.values.first_name}
+        onChange={formik.handleChange}
+        error={formik.touched.first_name && Boolean(formik.errors.first_name)}
+        helperText={formik.touched.first_name && formik.errors.first_name}
+    />
+    <TextField
+        fullWidth
+        id="last_name"
+        name="last_name"
+        type="text"
+        sx={{ mb: 2, mt: 2 }}
+        label="Last Name"
+        placeholder="Last Name"
+        value={formik.values.last_name}
+        onChange={formik.handleChange}
+        error={formik.touched.last_name && Boolean(formik.errors.last_name)}
+        helperText={formik.touched.last_name && formik.errors.last_name}
+    />
+    <TextField
+        fullWidth
+        id="email"
+        name="email"
+        type="email"
+        sx={{ mb: 2, mt: 2 }}
+        label="Email"
+        placeholder="Email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+        error={formik.touched.email && Boolean(formik.errors.email)}
+        helperText={formik.touched.email && formik.errors.email}
+    />
+    <TextField
+        id="password"
+        name="password"
+        type="password"
+        fullWidth
+        sx={{mb:2}}
+        label="Password"
+        placeholder="Password"
+        value={formik.values.password}
+        onChange={formik.handleChange}
+        error={formik.touched.password && Boolean(formik.errors.password)}
+        helperText={formik.touched.password && formik.errors.password}
+    />
+
+<Button type="submit" sx={{ width: "100%" }}>Submit</Button>
+
+</form>
+  )
+}

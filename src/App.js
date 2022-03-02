@@ -6,6 +6,8 @@ import bookTheme from './themes/bookTheme';
 import Button from './components/Button';
 import TextField from './components/TextField'
 import CheckBox from './components/CheckBox'
+import LoginForm from './forms/LoginForm';
+import RegisterForm from './forms/RegisterForm';
 
 import {CancelToken} from 'apisauce';
 import {getBooks} from './api/apiBook';
@@ -31,10 +33,13 @@ function App() {
       <NavBar>
 
         <h1>Book List Project</h1>
-        <TextField />
+        {/* <TextField />
         <CheckBox />
         <Button variant="text">Click Me Beautiful</Button>
-        <Button onClick={handleClick}>Do API Call</Button>
+        <Button onClick={handleClick}>Do API Call</Button> */}
+        <LoginForm />
+        <hr />
+        <RegisterForm />
         
 
       </NavBar>

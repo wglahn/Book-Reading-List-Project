@@ -6,7 +6,6 @@ export const getLogin = async (email, password, cancelToken)=>{
     let error;
     let user;
     
-
     const response = await apiClient(email, password, cancelToken).get(endpoint);
     
     if (response.ok){

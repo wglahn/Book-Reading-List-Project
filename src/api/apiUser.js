@@ -1,7 +1,6 @@
 import apiClientNoAuth from './clientNoAuth'
 import apiClientTokenAuth from './clientTokenAuth'
 
-
 const endpoint = '/user'
 
 export const postUser = async(email,firstName,lastName,password, cancelToken)=>{
