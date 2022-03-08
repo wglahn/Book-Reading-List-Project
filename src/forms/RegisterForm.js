@@ -1,8 +1,14 @@
-import React from 'react'
+import React, {useState, useContext} from 'react'
 import * as Yup from "yup";
 import { useFormik } from 'formik';
 import Button from "../components/Button";
 import TextField from '@mui/material/TextField';
+import { AppContext } from '../context/AppContext' 
+// import { CancelToken } from 'apisauce';
+// import { postUser } from '../api/apiUser';
+// import { putUser } from '../api/apiUser';
+import useRegisterUser from '../hooks/useRegisterUser'
+import useDeleteUser from '../hooks/useDeleteUser';
 
 const FormSchema = Yup.object({
     first_name:Yup.string().required("Required"),
@@ -11,24 +17,28 @@ const FormSchema = Yup.object({
     password: Yup.string().required()
 })
 
-// {first_name:"Happy", last_name:"Gilmore", email:"happy@mail.com", password:"12345"}
-export default function RegisterForm({item}) {
-
+export default function RegisterForm() {
+    const [formData, setFormData] = useState({})
+    const [deleteUser, setDeleteUser] = useState({})
+    const {user} = useContext(AppContext)
+    
     const initialValues={
-        first_name:item?.first_name ?? '',
-        last_name:item?.last_name ?? '',
-        email:item?.email ?? '',
-        password:item?.password ?? '',
+        first_name:user?.first_name ?? '',
+        last_name:user?.last_name ?? '',
+        email:user?.email ?? '',
+        password:user?.password ?? ''
+        
+    }
+    
+    useRegisterUser(formData, user?.token??'')
+    useDeleteUser(deleteUser)
+
+    const handleSubmit=async (values)=>{
+        setFormData(values);
     }
 
-    const handleSubmit =(values,resetForm)=>{
-        console.log(values)
-        if(!item){
-            console.log("Create")
-        }else{
-            console.log("edit")
-        }
-        resetForm(initialValues);
+    const handleDelete=()=>{
+        setDeleteUser(formData)
     }
 
     const formik = useFormik({
@@ -95,6 +105,7 @@ export default function RegisterForm({item}) {
     />
 
 <Button type="submit" sx={{ width: "100%" }}>Submit</Button>
+<Button color="error" onClick={()=>handleDelete()} sx={{width:"100%", my:1}}>Delete User</Button>
 
 </form>
   )

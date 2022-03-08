@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import { ThemeProvider } from '@mui/material/styles';
+
 import NavBar from './components/NavBar';
-import bookTheme from './themes/bookTheme';
+
 import Button from './components/Button';
 import TextField from './components/TextField'
 import CheckBox from './components/CheckBox'
@@ -12,6 +12,7 @@ import {CancelToken} from 'apisauce';
 import BookList from './components/BookList'
 import BookCard from './components/BookCard'
 import SplitButton from './components/SplitButton'
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 
 // import {getBooks} from './api/apiBook';
@@ -33,23 +34,17 @@ const handleClick = async () => {
 
 function App() {
   return (
-    <ThemeProvider theme={bookTheme}>
-      <NavBar>
+   
+      <Router>
+        <NavBar>
+          <Routes>
+            <Route path="/" element={<BookList />} /> 
+            <Route path="/LoginForm" element={<LoginForm />} /> 
+            <Route path="/RegisterForm" element={<RegisterForm />} /> 
+          </Routes>
+        </NavBar>
+      </Router>
 
-        <h1>Book Store Project</h1>
-        {/* <TextField /> */}
-        {/* <CheckBox /> */}
-        {/* <Button variant="text">Click Me Beautiful</Button> */}
-        {/* <Button onClick={handleClick}>Do API Call</Button> */}
-        {/* <LoginForm /> */}
-        {/* <RegisterForm /> */}
-        <SplitButton />
-        <BookList />
-        {/* <BookCard /> */}
-        
-
-      </NavBar>
-    </ThemeProvider>
   );
 }
 

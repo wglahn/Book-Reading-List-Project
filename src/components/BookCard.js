@@ -9,10 +9,10 @@ import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 
 export default function RecipeReviewCard() {
-  const [added, setAdded] = React.useState(false);
+  // const [added, setAdded] = React.useState(false);
 
   const handleAddClick = () => {
-    setAdded();
+    // setAdded();
   };
 
   return (

@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import * as Yup from "yup";
 import { useFormik } from 'formik';
 import Button from '../components/Button';
 import TextField from '@mui/material/TextField';
+import {AppContext} from '../context/AppContext';
+import useLogin from '../hooks/useLogin';
+import { Link } from "react-router-dom";
 
 const FormSchema = Yup.object(
     {
@@ -16,12 +19,18 @@ const initialValues ={
     password: ""
 }
 
-const handleSubmit=(values)=>{
-    console.log(values)
-}
 
 export default function LoginForm() {
+    const {setUser} = useContext(AppContext);
+    const [loginCreds, setLoginCreds] = useState({})
+    const [error, setError] = useState('')
 
+    useLogin(loginCreds, setError, setUser, setLoginCreds)
+
+    const handleSubmit=async (values)=>{
+        setLoginCreds(values);
+    }
+    
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema:FormSchema,
@@ -56,6 +65,8 @@ export default function LoginForm() {
             helperText={formik.touched.password && formik.errors.password}
         />
         <Button type="submit" sx={{width:"100%"}}>Login</Button>
+        <br />
+        <h4><Link to="/RegisterForm" className="nav-link">New User? Please Register Here.</Link></h4>
 
     </form>
   )

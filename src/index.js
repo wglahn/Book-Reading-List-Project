@@ -4,11 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import bookTheme from './themes/bookTheme';
+import AppContextProvider from './context/AppContext';
+import BookListProvider from './context/BookListContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline />
-    <App />
+    <ThemeProvider theme={bookTheme}>
+      <AppContextProvider>
+        <BookListProvider>
+          <CssBaseline />
+          <App />
+        </BookListProvider>
+      </AppContextProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -5,7 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from "react-router-dom";
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
 export default function ButtonAppBar({children}) {
   return (
@@ -19,12 +20,14 @@ export default function ButtonAppBar({children}) {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <Link to="/" className="nav-link">
+              <LibraryBooksIcon />
+            </Link>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Books
+            Book List
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit"><Link to="/LoginForm" className="nav-link">Login</Link></Button>
         </Toolbar>
       </AppBar>
       {children}
