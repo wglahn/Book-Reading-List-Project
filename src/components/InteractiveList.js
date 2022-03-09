@@ -30,8 +30,8 @@ export default function InteractiveList() {
           </Typography>
           <Demo>
             <List dense={dense}>
-            {cart.map((item) => (
-                <ListItem
+            {cart.map((item, index) => (
+                <ListItem key= {index}
                   secondaryAction={
                     <IconButton key="rm" onClick={()=>{removeFromCart(item)}} edge="end" aria-label="delete">
                       <DeleteIcon />

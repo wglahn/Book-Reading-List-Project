@@ -13,20 +13,13 @@ import InteractiveList from './InteractiveList';
 import { BookListContext } from '../context/BookListContext';
 import { useContext } from 'react';
 import Box from '@mui/material/Box';
+import useBooks from '../hooks/useBooks';
 
 
 export default function BookList() {
-    const {books, setBooks, addToCart}= useContext(BookListContext)
-
-    const getData = async () => {
-        const source = CancelToken.source();
-        const response = await getBooks(source.token);
-        setBooks(response.books);
-    }
-
-    useEffect(()=>{
-        getData();
-    },[]);
+  const {books, addToCart}= useContext(BookListContext)
+  
+  useBooks()
 
   return (
     <>
@@ -34,9 +27,6 @@ export default function BookList() {
     <SplitButton />
     <InteractiveList />
     <ImageList cols={4}>
-      {/* <ImageListItem key="Subheader" >
-
-      </ImageListItem> */}
       {books.map((book) => (
         <ImageListItem key={book.img}>
           <img
