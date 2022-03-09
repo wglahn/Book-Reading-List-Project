@@ -7,8 +7,12 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { Link } from "react-router-dom";
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import {AppContext} from '../context/AppContext';
+import { useContext } from 'react';
 
 export default function ButtonAppBar({children}) {
+  const {user} = useContext(AppContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

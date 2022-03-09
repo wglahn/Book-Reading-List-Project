@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import {AppContext} from '../context/AppContext';
 import useLogin from '../hooks/useLogin';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FormSchema = Yup.object(
     {
@@ -26,9 +27,11 @@ export default function LoginForm() {
     const [error, setError] = useState('')
 
     useLogin(loginCreds, setError, setUser, setLoginCreds)
+    let navigate = useNavigate();
 
     const handleSubmit=async (values)=>{
         setLoginCreds(values);
+        navigate(`/`);
     }
     
     const formik = useFormik({

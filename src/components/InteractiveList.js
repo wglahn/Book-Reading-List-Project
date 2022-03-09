@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -8,14 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    }),
-  );
-}
+import {BookListContext} from '../context/BookListContext'
+import Button from '@mui/material/Button';
 
 const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -24,6 +18,7 @@ const Demo = styled('div')(({ theme }) => ({
 export default function InteractiveList() {
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
+  const {cart, removeFromCart, emptyCart} = useContext(BookListContext)
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
@@ -35,22 +30,23 @@ export default function InteractiveList() {
           </Typography>
           <Demo>
             <List dense={dense}>
-              {generate(
+            {cart.map((item) => (
                 <ListItem
                   secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
+                    <IconButton key="rm" onClick={()=>{removeFromCart(item)}} edge="end" aria-label="delete">
                       <DeleteIcon />
                     </IconButton>
                   }
                 >
                   <ListItemText
-                    primary="Single-line item"
+                    primary={item.title}
                     secondary={secondary ? 'Secondary text' : null}
                   />
-                </ListItem>,
-              )}
+                </ListItem>
+              ))}
             </List>
           </Demo>
+          <Button variant="outlined" key="delete" onClick={()=>{emptyCart()}}>Clear List</Button>
         </Grid>
       </Grid>
     </Box>

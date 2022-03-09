@@ -3,6 +3,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import InfoIcon from '@mui/icons-material/Info';
 import { useEffect, useState } from 'react';
 import { getBooks } from '../api/apiBook'
@@ -11,10 +12,11 @@ import SplitButton from './SplitButton';
 import InteractiveList from './InteractiveList';
 import { BookListContext } from '../context/BookListContext';
 import { useContext } from 'react';
+import Box from '@mui/material/Box';
+
 
 export default function BookList() {
-
-    const {books, setBooks}= useContext(BookListContext)
+    const {books, setBooks, addToCart}= useContext(BookListContext)
 
     const getData = async () => {
         const source = CancelToken.source();
@@ -27,12 +29,14 @@ export default function BookList() {
     },[]);
 
   return (
-
+    <>
+    <Box sx={{ display: 'grid' }}>
+    <SplitButton />
+    <InteractiveList />
     <ImageList cols={4}>
-      <ImageListItem key="Subheader" >
-        <SplitButton />
-        <InteractiveList />
-      </ImageListItem>
+      {/* <ImageListItem key="Subheader" >
+
+      </ImageListItem> */}
       {books.map((book) => (
         <ImageListItem key={book.img}>
           <img
@@ -45,17 +49,19 @@ export default function BookList() {
             title={book.title}
             subtitle={book.author}
             actionIcon={
-              <IconButton
+              <IconButton key="add" 
+                onClick={()=>{addToCart(book)}}
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                 aria-label={`info about ${book.title}`}
               >
-                <InfoIcon />
+                <AddCircleIcon />
               </IconButton>
             }
           />
         </ImageListItem>
       ))}
     </ImageList>
-
+    </Box>
+    </>
   );
 }
