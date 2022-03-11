@@ -11,7 +11,22 @@ import {AppContext} from '../context/AppContext';
 import { useContext } from 'react';
 
 export default function ButtonAppBar({children}) {
-  const {user} = useContext(AppContext);
+  const {user, setUser} = useContext(AppContext);
+
+  const handleLogout=()=>{
+    setUser({})
+  }
+
+  function loggedIn(){
+    return <>
+            <Button color="inherit"><Link to="/RegisterForm" className="nav-link">Edit Registration</Link></Button>
+            <Button color="inherit" onClick={()=>handleLogout()}><Link to="/LoginForm" className="nav-link">Logout</Link></Button>
+            </>
+  }
+
+  function loggedOut(){
+    return <Button color="inherit"><Link to="/LoginForm" className="nav-link">Login</Link></Button>;
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -31,7 +46,9 @@ export default function ButtonAppBar({children}) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Book List
           </Typography>
-          <Button color="inherit"><Link to="/LoginForm" className="nav-link">Login</Link></Button>
+
+          {user?.token ? loggedIn() : loggedOut()}
+
         </Toolbar>
       </AppBar>
       {children}

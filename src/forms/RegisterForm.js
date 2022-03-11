@@ -4,9 +4,6 @@ import { useFormik } from 'formik';
 import Button from "../components/Button";
 import TextField from '@mui/material/TextField';
 import { AppContext } from '../context/AppContext' 
-// import { CancelToken } from 'apisauce';
-// import { postUser } from '../api/apiUser';
-// import { putUser } from '../api/apiUser';
 import useRegisterUser from '../hooks/useRegisterUser'
 import useDeleteUser from '../hooks/useDeleteUser';
 
@@ -19,7 +16,7 @@ const FormSchema = Yup.object({
 
 export default function RegisterForm() {
     const [formData, setFormData] = useState({})
-    const [deleteUser, setDeleteUser] = useState({})
+    const [deleteUser, setDeleteUser] = useState(false)
     const {user} = useContext(AppContext)
     
     const initialValues={
@@ -32,13 +29,13 @@ export default function RegisterForm() {
     
     useRegisterUser(formData, user?.token??'')
     useDeleteUser(deleteUser)
-
+    
     const handleSubmit=async (values)=>{
         setFormData(values);
     }
-
+    
     const handleDelete=()=>{
-        setDeleteUser(formData)
+        setDeleteUser(true)
     }
 
     const formik = useFormik({

@@ -11,13 +11,12 @@ export default function useBooks() {
             const source = CancelToken.source();
             
             const books = async () => {
-                console.log('effect')
                 const response = await getBooks(source.token);
                 setBooks(response.books)
             }
             books()
             return ()=>{source.cancel();}
-        },[]
+        },[] //dependency array
     )
-    return 
+    
 }

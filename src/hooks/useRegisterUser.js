@@ -8,16 +8,17 @@ export default function useRegisterUser(data, token=null) {
         ()=>{
             const source = CancelToken.source();
             
-            token ? 
-            (async()=>{ //edit
-                const response = await putUser(token, data, source.token);
-                console.log(response,"edit")
-            })()
-            :
-            (async()=>{ //create
-                const response = await postUser(data.email, data.first_name, data.last_name, data.password, source.token);
-                console.log(response,"create")
-            })()
+            if (token) {
+                (async()=>{ //edit
+                    const response = await putUser(token, data, source.token);
+                    console.log(response,"edit")
+                })()
+            } else if (data.first_name) {
+                (async()=>{ //create
+                    const response = await postUser(data.email, data.first_name, data.last_name, data.password, source.token);
+                    console.log(response,"create")
+                })()
+            }
             return ()=>{source.cancel()}
         },[data, token] //listeners, what is passed into the function needs to be here too.
     )

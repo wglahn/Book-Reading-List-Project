@@ -3,7 +3,7 @@ import { CancelToken } from 'apisauce'
 import { deleteUser } from '../api/apiUser'
 import { AppContext } from '../context/AppContext'
 
-export default function useDeleteUser(userCheck) {   
+export default function useDeleteUser(bool) {   
     let response
     const {user} = useContext(AppContext)
 
@@ -11,20 +11,19 @@ export default function useDeleteUser(userCheck) {
         ()=>{
             const source = CancelToken.source()
             const delUser=async()=>{
-                console.log(user.token)
                 response = await deleteUser(user.token, source.token);
                 if (response){
                     console.log(response, 'delete')
                 }else if(response!==undefined && response ===false){
-                    console.log(response, 'delete')
-                    ///redirect to the login page
+                    console.log(response, 'delete error')
                 }
             }
-            if(userCheck){
-                delUser();
-            };
+            if (bool){
+                delUser()
+            }
+
             return ()=>{source.cancel()}
-        },[userCheck]
+        },[bool]
     )
   
 }

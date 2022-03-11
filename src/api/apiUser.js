@@ -10,12 +10,12 @@ export const postUser = async(email,firstName,lastName,password, cancelToken)=>{
 
 
 export const putUser = async(token, data, cancelToken)=>{
-    const response = await apiClientTokenAuth(token).put(endpoint,data);
+    const response = await apiClientTokenAuth(token, cancelToken).put(endpoint,data);
     return response.ok
 }
 
 
 export const deleteUser = async(token, cancelToken)=>{
-    const response = await apiClientTokenAuth(token).delete(endpoint);
+    const response = await apiClientTokenAuth(token, cancelToken).delete(endpoint);
     return response.ok
 }

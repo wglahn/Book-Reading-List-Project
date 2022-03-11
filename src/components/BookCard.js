@@ -5,50 +5,54 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import AddIcon from '@mui/icons-material/Add';
+import useBook from '../hooks/useBook';
+import { useParams, useNavigate } from 'react-router-dom'
+import Box from '@mui/material/Box'
 
-export default function RecipeReviewCard() {
-  // const [added, setAdded] = React.useState(false);
+export default function BookCard() {
+  const navigate = useNavigate()
+  const { id } = useParams();
+  const { book } = useBook(id);
 
-  const handleAddClick = () => {
-    // setAdded();
-  };
+  // if (error){
+  //   <Box>
+  //     <Error>{error}</Error>
+  //   </Box>
+  // }
+
+  // if (!book){
+  //   <Box>
+  //     {/* <Backdrop /> */}
+  //     hello
+  //   </Box>
+  // }
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Box sx={{ display:'flex', width:'100%', height: '100%', alignItems: 'center', justifyItems: 'center', alignContent:'center', justifyContent: 'center'}}>
+    <Card sx={{ maxWidth: 400, marginTop: 2}}>
       <CardHeader
-        title={item.title}
-        subheader={item.author}
+        title={book?.title}
+        subheader={book?.author}
       />
       <CardMedia
         component="img"
-        height="194"
-        image={item.img}
+        height="525"
+        image={book?.img}
         alt="Book Cover"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {item.summary}
+          {book?.summary}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton onClick={handleAddClick} aria-label="add">
-          <AddIcon />
+        <IconButton onClick={()=>{navigate('/')}} aria-label="add">
+          <CloseIcon />
         </IconButton>
       </CardActions>
     </Card>
+    </Box>
   );
 }
-
-const item = 
-  {
-    "author": "Arlene Dahl",
-    "created_on": "Mon, 28 Feb 2022 19:21:17 GMT",
-    "id": 18,
-    "img": "https://s2982.pcdn.co/wp-content/uploads/2018/11/always-ask-a-man-book-cover.jpg",
-    "pages": 198,
-    "subject": "self help",
-    "summary": "For women traveling back to the US 1950",
-    "title": "ALWAYS ASK A MAN: THE KEY TO FEMININITY"
-  }

@@ -13,7 +13,7 @@ const BookListProvider=({children})=>{
         return []
     }
 
-    const [books, setBooks]=useState([]);
+    const [books, setBooks] = useState([]);
     const [cart, dispatch] = useReducer(shopReducer,getCartFromLS())
 
     useEffect(

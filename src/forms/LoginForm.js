@@ -7,6 +7,7 @@ import {AppContext} from '../context/AppContext';
 import useLogin from '../hooks/useLogin';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Box from '@mui/material/Box'
 
 const FormSchema = Yup.object(
     {
@@ -22,7 +23,7 @@ const initialValues ={
 
 
 export default function LoginForm() {
-    const {setUser} = useContext(AppContext);
+    const {user, setUser} = useContext(AppContext);
     const [loginCreds, setLoginCreds] = useState({})
     const [error, setError] = useState('')
 
@@ -31,7 +32,10 @@ export default function LoginForm() {
 
     const handleSubmit=async (values)=>{
         setLoginCreds(values);
-        navigate(`/`);
+        console.log(error)
+        if (user?.token) {
+            navigate(`/`);
+        } 
     }
     
     const formik = useFormik({
@@ -69,8 +73,9 @@ export default function LoginForm() {
         />
         <Button type="submit" sx={{width:"100%"}}>Login</Button>
         <br />
-        <h4><Link to="/RegisterForm" className="nav-link">New User? Please Register Here.</Link></h4>
-
+        <Box sx={{ display:'flex', width:'100%', height: '100%', alignItems: 'center', justifyItems: 'center', alignContent:'center', justifyContent: 'center'}}>
+            <Link to="/RegisterForm" className="nav-link" ><h4>New User? Please Register Here.</h4></Link>
+        </Box>
     </form>
   )
 }
